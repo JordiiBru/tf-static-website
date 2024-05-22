@@ -1,75 +1,57 @@
 locals {
-  bucket_naming     =  (var.force_name == "") ? "${var.stage}-${var.owner}-${var.purpose}" : var.force_name
-  bucket_visibility = !(var.public || var.static_website)
+  final_domain_name = "${var.stage}.${var.domain_name}"
 }
 
-resource "aws_s3_bucket" "main_bucket" {
-  bucket = local.bucket_naming
+module "s3_bucket" {
+  source = "git@github.com:JordiiBru/aws-s3-bucket.git"
 
-  tags = {
-    terraform = true
-    stage     = var.stage
-    owner     = var.owner
-  }
+  # Required variables
+  stage   = var.stage
+  owner   = var.owner
+  purpose = var.purpose
+
+  # Optional variables
+  force_name     = local.final_domain_name
+  versioning     = var.bucket_versioning
+  static_website = var.static_website
 }
 
-# access block
-resource "aws_s3_bucket_public_access_block" "bucket_access_block" {
-  bucket = aws_s3_bucket.main_bucket.id
+module "cloudfront" {
+  source = "git@github.com:JordiiBru/aws-cloudfront.git"
 
-  block_public_acls       = local.bucket_visibility
-  block_public_policy     = local.bucket_visibility
-  ignore_public_acls      = local.bucket_visibility
-  restrict_public_buckets = local.bucket_visibility
+  # Required variables
+  stage   = var.stage
+  owner   = var.owner
+  purpose = var.purpose
+
+  # Optional variables
+  bucket_origin_id = module.s3_bucket.base_domain
+  regional_domain  = module.s3_bucket.regional_domain
+  cert_id          = module.acm.certificate_arn[0]
 }
 
-# versioning
-resource "aws_s3_bucket_versioning" "bucket_versioning" {
-  count = var.versioning ? 1 : 0
+module "acm" {
+  source = "git@github.com:JordiiBru/aws-acm.git"
 
-  bucket = aws_s3_bucket.main_bucket.id
-
-  versioning_configuration {
-    status = "Enabled"
-  }
+  # Required variables
+  stage       = var.stage
+  owner       = var.owner
+  purpose     = var.purpose
+  domain_name = local.final_domain_name
 }
 
-# policy
-resource "aws_s3_bucket_policy" "bucket_policy_for_static_website" {
-  count = var.static_website ? 1 : 0
+module "r53" {
+  source = "git@github.com:JordiiBru/aws-route53.git"
 
-  bucket = aws_s3_bucket.main_bucket.id
-  policy = data.aws_iam_policy_document.default_permissions.json
-}
+  # Required variables
+  stage   = var.stage
+  owner   = var.owner
+  purpose = var.purpose
+  domain_name = local.final_domain_name
 
-data "aws_iam_policy_document" "default_permissions" {
-  statement {
-    principals {
-      type        = "*"
-      identifiers = [aws_s3_bucket.main_bucket.id]
-    }
-    actions = [
-      "s3:Get*",
-      "s3:List*"
-    ]
-    resources = [
-      aws_s3_bucket.main_bucket.arn,
-      "${aws_s3_bucket.main_bucket.arn}/*",
-    ]
-  }
-}
+  # Optional variables
+  cloudfront_endpoint = module.cloudfront.cf_domain_name[0]
+  cloudfront_zone_id  = module.cloudfront.cf_zone_id[0]
+  nameservers         = var.record_nameservers
 
-# static website config
-resource "aws_s3_bucket_website_configuration" "bucket_statics" {
-  count = var.static_website ? 1 : 0
-
-  bucket = aws_s3_bucket.main_bucket.id
-
-  index_document {
-    suffix = "index.html"
-  }
-
-  error_document {
-    key = "error.html"
-  }
 }

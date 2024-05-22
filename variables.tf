@@ -33,3 +33,14 @@ variable "owner" {
 }
 
 # OPTIONAL VARIABLES
+
+variable "domain_name" {}
+variable "bucket_versioning" {
+
+}
+
+variable "static_website" {}
+
+variable "record_nameservers" {
+
+}
