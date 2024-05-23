@@ -2,7 +2,7 @@ module "static" {
   source = "../"
 
   # Required variables
-  stage   = "test"
+  stage   = "dev"
   owner   = "wanda"
   purpose = "tfg"
 
