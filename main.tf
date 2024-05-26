@@ -27,9 +27,7 @@ module "cloudfront" {
   # Optional variables
   bucket_origin_id = module.s3_bucket.base_domain
   regional_domain  = module.s3_bucket.regional_domain
-  cert_id          = module.acm.certificate_arn[0]
-
-  depends_on = [ module.acm ]
+  cert_id          = module.acm.certificate_arn
 }
 
 module "acm" {
