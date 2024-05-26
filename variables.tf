@@ -34,13 +34,14 @@ variable "owner" {
 
 # OPTIONAL VARIABLES
 
-variable "domain_name" {}
 variable "bucket_versioning" {
-
+  description = "Enable versioning on the bucket"
+  type        = bool
+  default     = false
 }
 
-variable "static_website" {}
-
-variable "record_nameservers" {
-
+variable "static_website" {
+  description = "Make the bucket host a static website"
+  type        = bool
+  default     = true
 }
