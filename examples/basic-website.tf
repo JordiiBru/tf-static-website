@@ -6,6 +6,6 @@ module "static" {
   owner   = "wanda"
   purpose = "portfolio"
 
-  # Optional variables
+  # Custom variables
   bucket_versioning = true
 }

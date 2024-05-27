@@ -36,9 +36,11 @@ module "acm" {
   source = "git@github.com:JordiiBru/aws-acm.git"
 
   # Required variables
-  stage       = var.stage
-  owner       = var.owner
-  purpose     = var.purpose
+  stage   = var.stage
+  owner   = var.owner
+  purpose = var.purpose
+
+  # Custom varibales
   domain_name = local.final_domain_name
 }
 
