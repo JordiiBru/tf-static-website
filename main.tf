@@ -4,7 +4,7 @@ locals {
 }
 
 module "s3_bucket" {
-  source = "git@github.com:JordiiBru/aws-s3-bucket.git"
+  source = "git@github.com:JordiiBru/aws-s3-bucket.git?ref=v0.0.1"
 
   # Required variables
   stage   = var.stage
@@ -18,7 +18,7 @@ module "s3_bucket" {
 }
 
 module "cloudfront" {
-  source = "git@github.com:JordiiBru/aws-cloudfront.git"
+  source = "git@github.com:JordiiBru/aws-cloudfront.git?ref=v0.0.1"
 
   # Required variables
   stage   = var.stage
@@ -33,7 +33,7 @@ module "cloudfront" {
 }
 
 module "acm" {
-  source = "git@github.com:JordiiBru/aws-acm.git"
+  source = "git@github.com:JordiiBru/aws-acm.git?ref=v0.0.1"
 
   # Required variables
   stage   = var.stage
@@ -45,7 +45,7 @@ module "acm" {
 }
 
 module "r53" {
-  source = "git@github.com:JordiiBru/aws-route53.git"
+  source = "git@github.com:JordiiBru/aws-route53.git?ref=v0.0.1"
 
   # Required variables
   stage   = var.stage
