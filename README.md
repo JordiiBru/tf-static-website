@@ -54,7 +54,7 @@ It is important to note that the naming of the S3 bucket follows the AWS require
 
 ```hcl
 module "static" {
-  source = "../"
+  source = "git@github.com:JordiiBru/tf-static-website.git?ref=[TAG]"
 
   # Required variables
   stage   = "dev"
