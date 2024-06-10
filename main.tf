@@ -4,7 +4,7 @@ locals {
 }
 
 module "s3_bucket" {
-  source = "git@github.com:JordiiBru/aws-s3-bucket.git?ref=v0.0.1"
+  source = "git@github.com:JordiiBru/aws-s3-bucket.git"
 
   # Required variables
   stage   = var.stage
@@ -18,7 +18,7 @@ module "s3_bucket" {
 }
 
 module "cloudfront" {
-  source = "git@github.com:JordiiBru/aws-cloudfront.git?ref=v0.0.1"
+  source = "git@github.com:JordiiBru/aws-cloudfront.git"
 
   # Required variables
   stage   = var.stage
