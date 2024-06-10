@@ -27,6 +27,7 @@ module "cloudfront" {
 
   # Custom variables
   bucket_origin_id = module.s3_bucket.base_domain
+  website_endpoint = module.s3_bucket.website_endpoint
   regional_domain  = module.s3_bucket.regional_domain
   cert_id          = module.acm.certificate_arn
   domain_name      = local.final_domain_name
