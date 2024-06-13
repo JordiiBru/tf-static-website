@@ -50,6 +50,10 @@ It is important to note that the naming of the S3 bucket follows the AWS require
 | `route53_zone_id`         | The ID of the Route 53 hosted zone.                  |
 | `route53_record_name`     | The name of the Route 53 record for the CloudFront distribution. |
 
+## Module diagram
+
+![Static website diagram](files/images/static_website_diagram.png)
+
 ## Usage
 
 ```hcl

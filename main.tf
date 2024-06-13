@@ -1,8 +1,3 @@
-locals {
-  domain_name       = "jordibru.cloud"
-  final_domain_name = var.stage == "prod" ? "${var.purpose}.${local.domain_name}" : "${var.stage}-${var.purpose}.${local.domain_name}"
-}
-
 module "s3_bucket" {
   source = "git@github.com:JordiiBru/aws-s3-bucket.git"
 
