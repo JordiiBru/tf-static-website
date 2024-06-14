@@ -21,34 +21,32 @@ It is important to note that the naming of the S3 bucket follows the AWS require
 - When the stage is set to "production", the S3 bucket name will be `${var.purpose}.jordibru.cloud`.
 - For all other stages, the bucket name will follow the format `${var.stage}-${var.purpose}.jordibru.cloud`.
 
-## Required Variables
+## Common Variables
 
-| Name      | Description                                    | Type   | Validation                                | Default |
-|-----------|------------------------------------------------|--------|-------------------------------------------|---------|
-| `stage`   | The stage of development (e.g., test, dev, staging, prod). | string | Must be one of `test`, `dev`, `staging`, `prod` | N/A     |
-| `purpose` | A short description about the purpose of the created resource. | string | Must match the regex `^[a-zA-Z0-9-_]*$`   | N/A     |
-| `owner`   | The owner of the deployed infrastructure.      | string | Must have more than three characters      | N/A     |
+| Name      | Description                                                    | Type   | Validation                                      | Default | Required |
+|-----------|----------------------------------------------------------------|--------|-------------------------------------------------|---------|----------|
+| `stage`   | The stage of development (e.g., test, dev, staging, prod).     | string | Must be one of `test`, `dev`, `staging`, `prod` |         | yes      |
+| `purpose` | A short description about the purpose of the created resource. | string | Must match the regex `^[a-zA-Z0-9-_]*$`         |         | yes      |
+| `owner`   | The owner of the deployed infrastructure.                      | string | Must have more than three characters            |         | yes      |
 
 ## Custom Variables
 
-| Name               | Description                               | Type   | Default              |
-|--------------------|-------------------------------------------|--------|----------------------|
-| `bucket_versioning`| Enable versioning on the S3 bucket.       | bool   | `false`              |
-| `static_website`   | Configure the S3 bucket to host a static website. | bool   | `true`               |
+| Name                  | Description                                   | Type   | Validation  | Default | Required |
+|-----------------------|---------------------------------------------- |--------|-------------|---------|----------|
+| `bucket_versioning`   | Wheter to enable versioning on the S3 bucket. | bool   |             | false   | no       |
 
 ## Outputs
 
-| Name                      | Description                                          |
-|---------------------------|------------------------------------------------------|
-| `bucket_name`             | The name of the S3 bucket hosting the static website.|
-| `bucket_arn`              | The ARN of the S3 bucket hosting the static website. |
-| `cloudfront_distribution_arn` | The ARN of the CloudFront distribution.              |
-| `cloudfront_domain_name`  | The domain name of the CloudFront distribution.      |
-| `cloudfront_zone_id`      | The hosted zone ID of the CloudFront distribution.   |
-| `acm_certificate_arn`     | The ARN of the ACM certificate used for the CloudFront distribution. |
-| `route53_zone_name`       | The name of the Route 53 hosted zone.                |
-| `route53_zone_id`         | The ID of the Route 53 hosted zone.                  |
-| `route53_record_name`     | The name of the Route 53 record for the CloudFront distribution. |
+| Name                          | Description                                                          |
+|-------------------------------|----------------------------------------------------------------------|
+| `bucket_name`                 | The name of the S3 bucket hosting the static website.                |
+| `bucket_arn`                  | The ARN of the S3 bucket hosting the static website.                 |
+| `cloudfront_distribution_arn` | The ARN of the CloudFront distribution.                              |
+| `cloudfront_domain_name`      | The domain name of the CloudFront distribution.                      |
+| `cloudfront_zone_id`          | The hosted zone ID of the CloudFront distribution.                   |
+| `acm_certificate_arn`         | The ARN of the ACM certificate used for the CloudFront distribution. |
+| `route53_zone_name`           | The name of the Route 53 hosted zone.                                |
+| `route53_zone_id`             | The ID of the Route 53 hosted zone.                                  |
 
 ## Module diagram
 
@@ -60,10 +58,10 @@ It is important to note that the naming of the S3 bucket follows the AWS require
 module "static" {
   source = "git@github.com:JordiiBru/tf-static-website.git?ref=[TAG]"
 
-  # Required variables
+  # Common variables
   stage   = "dev"
   owner   = "wanda"
-  purpose = "portfolio"
+  purpose = "tfg"
 
   # Custom variables
   bucket_versioning = true

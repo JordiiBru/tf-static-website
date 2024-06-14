@@ -11,17 +11,17 @@ output "bucket_arn" {
 
 output "cloudfront_distribution_arn" {
   description = "The ARN of the CloudFront distribution."
-  value       = module.cloudfront.cf_distr_arn
+  value       = module.cloudfront.distribution_arn
 }
 
 output "cloudfront_domain_name" {
   description = "The domain name of the CloudFront distribution."
-  value       = module.cloudfront.cf_domain_name
+  value       = module.cloudfront.distribution_domain_name
 }
 
 output "cloudfront_zone_id" {
   description = "The hosted zone ID of the CloudFront distribution."
-  value       = module.cloudfront.cf_zone_id
+  value       = module.cloudfront.distribution_zone_id
 }
 
 output "acm_certificate_arn" {
@@ -37,9 +37,4 @@ output "route53_zone_name" {
 output "route53_zone_id" {
   description = "The ID of the Route 53 hosted zone."
   value       = module.r53.zone_id
-}
-
-output "route53_record_name" {
-  description = "The name of the Route 53 record for the CloudFront distribution."
-  value       = module.r53.record_name
 }

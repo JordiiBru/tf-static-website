@@ -35,13 +35,7 @@ variable "owner" {
 # CUSTOM VARIABLES
 
 variable "bucket_versioning" {
-  description = "Enable versioning on the S3 bucket."
+  description = "Wheter to enable versioning on the S3 bucket."
   type        = bool
   default     = false
-}
-
-variable "static_website" {
-  description = "Configure the S3 bucket to host a static website."
-  type        = bool
-  default     = true
 }

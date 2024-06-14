@@ -1,10 +1,10 @@
 module "static" {
   source = "../"
 
-  # Required variables
+  # Common variables
   stage   = "dev"
   owner   = "wanda"
-  purpose = "portfolio"
+  purpose = "tfg"
 
   # Custom variables
   bucket_versioning = true
